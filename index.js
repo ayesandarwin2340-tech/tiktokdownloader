@@ -380,7 +380,7 @@ async function handleDownloadRequest(ctx, url, type, isBurmese) {
         
         const caption = `✅ <b>Download ဆွဲပြီးပါပြီ!</b>\n\n` +
             `🎬 ${BOT_USERNAME} မှ download ဆွဲထားသည်\n` +
-            `🔧 Powered by @ItachiXCoder`;
+            `🔧 Developed by @Zinko158`;
         
         try {
             switch(type) {
