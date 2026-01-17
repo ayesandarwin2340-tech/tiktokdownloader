@@ -1,0 +1,21 @@
+{
+  "name": "tiktok-telegram-bot",
+  "version": "2.0.0",
+  "description": "TikTok Downloader Telegram Bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "telegraf": "^4.12.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.0",
+    "express": "^4.18.0",
+    "node-cache": "^5.1.2",
+    "fs-extra": "^11.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
