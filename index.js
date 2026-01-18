@@ -543,51 +543,32 @@ function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-// ==================== SERVER SETUP ====================
+/// ==================== SERVER SETUP ====================
 
-// Webhook setup (for production)
-if (WEBHOOK_URL) {
-    const app = express();
+const app = express();
+app.get('/', (req, res) => {
+    res.json({ status: 'online', mode: WEBHOOK_URL ? 'webhook' : 'polling' });
+});
+
+app.listen(PORT, async () => {
+    console.log(`🤖 Server is listening on port ${PORT}`);
     
-    // Middleware
-    app.use(express.json());
-    
-    // Webhook endpoint
-    app.post(`/bot${BOT_TOKEN}`, (req, res) => {
-        bot.handleUpdate(req.body);
-        res.sendStatus(200);
-    });
-    
-    // Health check
-    app.get('/', (req, res) => {
-        res.json({
-            status: 'online',
-            bot: BOT_USERNAME,
-            version: '2.0.0'
-        });
-    });
-    
-    // Start server
-    app.listen(PORT, async () => {
-        console.log(`🤖 Bot running on port ${PORT}`);
-        console.log(`🌐 Webhook URL: ${WEBHOOK_URL}/bot${BOT_TOKEN}`);
-        
+    if (WEBHOOK_URL) {
         try {
-            // Set webhook
             await bot.telegram.setWebhook(`${WEBHOOK_URL}/bot${BOT_TOKEN}`);
             console.log('✅ Webhook set successfully');
+            bot.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
         } catch (error) {
             console.error('❌ Failed to set webhook:', error);
         }
-    });
-} else {
-    // Polling mode (for development)
-    console.log('🚀 Starting bot in polling mode...');
-    bot.launch();
-    
-    // Enable graceful stop
-    process.once('SIGINT', () => bot.stop('SIGINT'));
-    process.once('SIGTERM', () => bot.stop('SIGTERM'));
-}
+    } else {
+        console.log('🚀 Starting bot in polling mode...');
+        bot.launch();
+    }
+});
+
+// Enable graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
 console.log('✅ TikTok Downloader Bot (Node.js) is starting...');
