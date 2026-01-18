@@ -156,8 +156,8 @@ async function handleStartCommand(ctx) {
     
     const keyboard = Markup.inlineKeyboard([
         [
-            Markup.button.url('📖 How to Use', 'https://telegra.ph/TikTok-Downloader-Guide-01-15'),
-            Markup.button.url('🌟 Rate Bot', 'https://t.me/tbotratingbot?start=ttdl-bot')
+            Markup.button.url('📖 How to Use', 'https://telegra.ph/TikTok-Vd-Without-Watermark-01-18'),
+            Markup.button.url('🌟 Rate Bot', 'https://t.me/zinko158')
         ]
     ]);
     
